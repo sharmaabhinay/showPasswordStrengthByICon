@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength indentifier</title>
+    <style>
+        body{
+            background-color: rgb(122, 72, 158);
+        }
+        .parent{
+            background-color: white;
+            display: inline-block;
+            padding: 3rem;
+            text-align: start;
+            box-shadow: 6px 6px 15px 5px rgb(0, 0, 0);
+            position: relative;
+            top: 9rem;           
+
+        }h3{
+            margin-top: -1.5rem;
+            text-transform: uppercase;
+        }
+        #input-container{
+            width: 20rem;
+            display: flex;
+        }
+        #input{
+            width: 18rem;
+            height: 2.4rem;
+            padding: 2px 1rem;
+            outline: none;
+            border: 2px solid black;
+            border-radius: 6px;            
+        }.show-hide{
+            cursor: pointer;
+            transform: translate(-1.7rem , 12px);
+            border: 1px solid white;
+            
+        }#indicator-container{
+            margin-top: 1rem;
+            text-align: start;
+        }
+        
+        #creator{
+            position: fixed;
+            bottom: 2px;
+            right: 10px;
+            color: rgb(0, 0, 0);
+            opacity: 0.5;
+        }
+        ul{
+            text-align: start;
+            margin-left: -2.2rem;
+        }
+        li{
+            list-style-type: disc;
+            opacity: 0.7;
+            list-style: none;
+            font-size: 1.1em;
+        }
+        .fa-solid{
+            margin-right: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div class="parent">
+            <h3>check you password strength</h3>
+            <div id="input-container">
+                <input type="password" id="input" placeholder="Type Password"><span><i class="fa-regular fa-eye show-hide"></i></span>
+                
+            </div>
+            <div id="indicator-container" class="display-n">
+                <!-- <span><i class="fa-solid fa-circle-exclamation"></i></span> -->
+                <!-- <p id="line-indicator">this is demo</p>
+                    <i class="fa-solid fa-check"></i>
+                 -->
+                <ul>
+                    <li id="list1"><i class="fa-solid fa-circle-xmark smallIcon"></i>at least one smaller case</li>
+                    <li id="list2"><i class="fa-solid fa-circle-xmark upperIcon"></i>at least one UpperCase</li>
+                    <li id="list3"><i class="fa-solid fa-circle-xmark digitIcon"></i>at least one digit</li>
+                    <li id="list4"><i class="fa-solid fa-circle-xmark specialIcon"></i>at least one special Charactor</li>
+                    <li id="list5"><i class="fa-solid fa-circle-xmark lengthIcon"></i>password length should be 8 or more</li>
+                </ul>
+            </div>
+        </div>
+    </center>
+    <p id="creator">designed by Abhinay Sharma</p>
+    <script>
+        let input = document.getElementById('input');
+let show_hide = document.querySelector('.show-hide');
+let text = document.getElementById('text-indicator');
+let indicator = document.getElementById('indicator-container');
+let smallCase= document.getElementById('list1')
+let upperCase = document.getElementById('list2')
+let digit = document.getElementById('list3')
+let specialChars = document.getElementById('list4')
+let length = document.getElementById('list5')
+let line = document.getElementById('line-indicator')
+let smallIcon = document.querySelector('.smallIcon')
+let upperIcon = document.querySelector('.upperIcon')
+let digitIcon = document.querySelector('.digitIcon')
+let lengthIcon = document.querySelector('.lengthIcon')
+let specialIcon = document.querySelector('.specialIcon')
+
+
+let alphabets = /[a-z]/;
+let Alphabets = /[A-Z]/;
+let numbers = /[0-9]/;
+let Scharacters = /[`,~,!,@,#,$,%,^,&,*,-,_,=,+]/;
+let lists = document.querySelector('.lists')
+
+show_hide.addEventListener('click', () => {
+    if (input.type == 'password') {
+        input.type = 'text';
+        show_hide.classList.replace("fa-eye-slash", "fa-eye");
+    } else {
+        input.type = 'password';
+        show_hide.classList.replace("fa-eye", "fa-eye-slash");
+    }
+});
+
+input.addEventListener('keyup', () => {
+    let val = input.value;
+    if (val.match(alphabets)) {
+        show_hide.style.color = 'orange';
+        input.style.borderColor = 'orange';
+        smallCase.style.cssText = 'opacity:1; color:green;font-weight:bold'
+        smallIcon.classList.replace('fa-circle-xmark','fa-check')
+
+    }else{
+        smallCase.style.cssText = 'color:black'
+        smallIcon.classList.replace('fa-check','fa-circle-xmark')
+    }
+    if (val.match(Alphabets)) {
+        show_hide.style.color = 'rgb(132, 145, 17)';
+        input.style.borderColor = 'rgb(132, 145, 17)';
+        upperCase.style.cssText = 'opacity:1; color:green;font-weight:bold'
+        upperIcon.classList.replace('fa-circle-xmark','fa-check')
+
+    }else{
+        upperCase.style.cssText = 'color:black'
+        upperIcon.classList.replace('fa-check','fa-circle-xmark')
+    }
+    if (val.match(numbers)) {
+        show_hide.style.color = 'yellowgreen';
+        input.style.borderColor = 'yellowgreen';
+        digit.style.cssText = 'opacity:1; color:green;font-weight:bold'
+        digitIcon.classList.replace('fa-circle-xmark','fa-check')
+    }else{
+        digit.style.cssText = 'color:black'
+        digitIcon.classList.replace('fa-check','fa-circle-xmark')
+    }
+    if (val.match(Scharacters)) {
+        show_hide.style.color = 'green';
+        input.style.borderColor = 'green';
+        specialChars.style.cssText = 'opacity:1; color:green;font-weight:bold'
+        specialIcon.classList.replace('fa-circle-xmark','fa-check')
+    }else{
+        specialChars.style.cssText = 'color:black';
+        specialIcon.classList.replace('fa-check','fa-circle-xmark')
+    }
+    if(val.length >= 8){
+        show_hide.style.color = 'green';
+        input.style.borderColor = 'green';
+        length.style.cssText = 'opacity:1; color:green;font-weight:bold';
+        lengthIcon.classList.replace('fa-circle-xmark','fa-check')
+    }else{
+        length.style.cssText = 'color:black'
+        lengthIcon.classList.replace('fa-check','fa-circle-xmark')
+    }
+    if (val == "") {
+        input.style.borderColor = 'black';
+        show_hide.style.color = 'black'
+    }
+});
+
+    </script>
+    <script src="https://kit.fontawesome.com/763962caf7.js" crossorigin="anonymous"></script>
+</body>
+</html>
